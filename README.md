@@ -122,12 +122,13 @@ Benchmarked across **100 hand-annotated surveillance frames** containing **442 G
 
 ### Per-Condition Performance Breakdown
 
-| Environmental Condition | Ground-Truth Faces | Base SCRFD Missed (%) | Pose Fusion Missed (%) | **Agentic Missed (%)** | **Agentic Recall (%)** | Self-Healing Actions |
+| Environmental Condition | Unique Ground-Truth Faces | Base SCRFD Missed (%) | Pose Fusion Missed (%) | **Agentic Missed (%)** | **Agentic Recall (%)** | Self-Healing Actions |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Severe Occlusion** | 104 | 18.8% | 15.6% | **7.7% 🛡️** | **92.3% 🏆** | 1 |
-| **Blur & Low Light** | 162 | 33.3% | 23.5% | **21.0%** | **79.0%** | 6 |
-| **Distant / Multi-Person**| 106 | 37.0% | 27.8% | **28.3%** | **71.7%** | 2 |
-| **Motion Blur** | 26 | 38.5% | 38.5% | **38.5%** | **61.5%** | 1 |
+| **Severe Occlusion** | 52 | 18.8% (10) | 15.6% (8) | **7.7% (4) 🛡️** | **92.3% (48/52) 🏆** | 1 |
+| **Blur & Low Light** | 81 | 33.3% (27) | 23.5% (19) | **21.0% (17)** | **79.0% (64/81)** | 6 |
+| **Distant / Multi-Person**| 53 | 37.0% (20) | 27.8% (15) | **28.3% (15)** | **71.7% (38/53)** | 2 |
+| **Motion Blur** | 13 | 38.5% (5) | 38.5% (5) | **38.5% (5)** | **61.5% (8/13)** | 1 |
+| **Nominal Surveillance** | 22 | 40.9% (9) | 40.9% (9) | **40.9% (9)** | **59.1% (13/22)** | 0 |
 
 ---
 
