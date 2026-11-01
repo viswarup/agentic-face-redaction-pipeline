@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+python-multipart
+opencv-python
+numpy
+pandas
+onnxruntime
+insightface
+retina-face
+supervision
+ultralytics
+streamlit
+pytest
+httpx
+tabulate

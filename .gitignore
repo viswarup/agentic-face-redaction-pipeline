@@ -1,0 +1,57 @@
+# Python cache and environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing and Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# IDE and Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Heavy external model caches (>100MB rejected by GitHub)
+weights/deepface/
+weights/models/
+
+# Raw un-trimmed camera dumps (only demo_clips are needed for evaluation)
+data/video_snippets/blur and poor lighting/
+data/video_snippets/distant faces, poor quality, multiple people/
+data/video_snippets/face from top/
+data/video_snippets/good lighting  + occlusion/
+data/video_snippets/a74ecf63*.mp4
+
+# Temporary run outputs
+data/outputs/eval_100_redacted/
+data/outputs/diagnostics/
+data/outputs/ablation_no_track/*.mp4
+*.tmp

@@ -1,0 +1,1265 @@
+{
+  "summary": {
+    "model": "Base SCRFD-34G",
+    "gt_faces": 442,
+    "missed_faces": 140,
+    "missed_faces_pct": 31.67,
+    "residual_visible": 72,
+    "residual_visible_pct": 16.29,
+    "fully_obscured": 230,
+    "fully_obscured_pct": 52.04,
+    "mean_iou": 0.429,
+    "avg_latency_ms": 398.9,
+    "fps": 2.5,
+    "recall_pct": 68.3,
+    "detected_faces": 302
+  },
+  "summary_scrfd": {
+    "model": "Base SCRFD-34G",
+    "gt_faces": 442,
+    "missed_faces": 140,
+    "missed_faces_pct": 31.67,
+    "residual_visible": 72,
+    "residual_visible_pct": 16.29,
+    "fully_obscured": 230,
+    "fully_obscured_pct": 52.04,
+    "mean_iou": 0.429,
+    "avg_latency_ms": 398.9,
+    "fps": 2.5,
+    "recall_pct": 68.3,
+    "detected_faces": 302
+  },
+  "summary_retinaface": {
+    "model": "RetinaFace",
+    "gt_faces": 442,
+    "missed_faces": 234,
+    "missed_faces_pct": 52.94,
+    "residual_visible": 44,
+    "residual_visible_pct": 9.95,
+    "fully_obscured": 164,
+    "fully_obscured_pct": 37.1,
+    "mean_iou": 0.311,
+    "avg_latency_ms": 529.1,
+    "fps": 1.9,
+    "recall_pct": 47.1,
+    "detected_faces": 208
+  },
+  "summary_pose_fusion": {
+    "model": "SCRFD-34G + Body/Head Pose",
+    "gt_faces": 442,
+    "missed_faces": 106,
+    "missed_faces_pct": 23.98,
+    "residual_visible": 154,
+    "residual_visible_pct": 34.84,
+    "fully_obscured": 182,
+    "fully_obscured_pct": 41.18,
+    "mean_iou": 0.387,
+    "avg_latency_ms": 458.5,
+    "fps": 2.2,
+    "recall_pct": 76.0,
+    "detected_faces": 336
+  },
+  "three_way_comparison": [
+    {
+      "model": "Base SCRFD-34G",
+      "gt_faces": 442,
+      "missed_faces": 140,
+      "missed_faces_pct": 31.67,
+      "residual_visible": 72,
+      "residual_visible_pct": 16.29,
+      "fully_obscured": 230,
+      "fully_obscured_pct": 52.04,
+      "mean_iou": 0.429,
+      "avg_latency_ms": 398.9,
+      "fps": 2.5,
+      "detected_faces": 302,
+      "recall_pct": 68.3
+    },
+    {
+      "model": "RetinaFace",
+      "gt_faces": 442,
+      "missed_faces": 234,
+      "missed_faces_pct": 52.94,
+      "residual_visible": 44,
+      "residual_visible_pct": 9.95,
+      "fully_obscured": 164,
+      "fully_obscured_pct": 37.1,
+      "mean_iou": 0.311,
+      "avg_latency_ms": 529.1,
+      "fps": 1.9,
+      "detected_faces": 208,
+      "recall_pct": 47.1
+    },
+    {
+      "model": "SCRFD-34G + Body/Head Pose",
+      "gt_faces": 442,
+      "missed_faces": 106,
+      "missed_faces_pct": 23.98,
+      "residual_visible": 154,
+      "residual_visible_pct": 34.84,
+      "fully_obscured": 182,
+      "fully_obscured_pct": 41.18,
+      "mean_iou": 0.387,
+      "avg_latency_ms": 458.5,
+      "fps": 2.2,
+      "detected_faces": 336,
+      "recall_pct": 76.0
+    }
+  ],
+  "three_way_table_rows": [
+    [
+      "Base SCRFD-34G",
+      442,
+      "302 (68.3%)",
+      "230 (52.0%)",
+      "72 (16.3%)",
+      "140 (31.7%)",
+      "0.429",
+      "398.9 ms",
+      "2.5"
+    ],
+    [
+      "RetinaFace Detector",
+      442,
+      "208 (47.1%)",
+      "164 (37.1%)",
+      "44 (10.0%)",
+      "234 (52.9%)",
+      "0.311",
+      "529.1 ms",
+      "1.9"
+    ],
+    [
+      "SCRFD-34G + Body/Head Pose (Winner)",
+      442,
+      "336 (76.0%) \ud83c\udfc6",
+      "182 (41.2%)",
+      "154 (34.8%)",
+      "106 (24.0%) \u2728",
+      "0.387",
+      "458.5 ms",
+      "2.2"
+    ]
+  ],
+  "three_way_headers": [
+    "Model Architecture",
+    "Real Faces",
+    "Face Detection Recall (%)",
+    "Fully Protected (%) [Complete Blur]",
+    "Partially Covered (%) [Edge Notice]",
+    "Missed Faces (%) [Unprotected]",
+    "Blur Overlap (IoU)",
+    "Avg Latency (ms)",
+    "FPS"
+  ],
+  "per_condition_comparison": [
+    {
+      "stratum": "Blur & Low Light",
+      "gt_faces": 162,
+      "missed_scrfd_pct": 33.3,
+      "missed_retina_pct": 53.1,
+      "missed_pose_pct": 23.5,
+      "residual_scrfd_pct": 17.3,
+      "residual_retina_pct": 8.6,
+      "residual_pose_pct": 34.6,
+      "obscured_scrfd_pct": 49.4,
+      "obscured_retina_pct": 38.3,
+      "obscured_pose_pct": 42.0
+    },
+    {
+      "stratum": "Occlusion",
+      "gt_faces": 128,
+      "missed_scrfd_pct": 18.8,
+      "missed_retina_pct": 40.6,
+      "missed_pose_pct": 15.6,
+      "residual_scrfd_pct": 15.6,
+      "residual_retina_pct": 10.9,
+      "residual_pose_pct": 37.5,
+      "obscured_scrfd_pct": 65.6,
+      "obscured_retina_pct": 48.4,
+      "obscured_pose_pct": 46.9
+    },
+    {
+      "stratum": "Distant / Multi-Person",
+      "gt_faces": 108,
+      "missed_scrfd_pct": 37.0,
+      "missed_retina_pct": 63.0,
+      "missed_pose_pct": 27.8,
+      "residual_scrfd_pct": 11.1,
+      "residual_retina_pct": 11.1,
+      "residual_pose_pct": 27.8,
+      "obscured_scrfd_pct": 51.9,
+      "obscured_retina_pct": 25.9,
+      "obscured_pose_pct": 44.4
+    },
+    {
+      "stratum": "Top-Down Angle",
+      "gt_faces": 44,
+      "missed_scrfd_pct": 50.0,
+      "missed_retina_pct": 63.6,
+      "missed_pose_pct": 40.9,
+      "residual_scrfd_pct": 27.3,
+      "residual_retina_pct": 9.1,
+      "residual_pose_pct": 45.5,
+      "obscured_scrfd_pct": 22.7,
+      "obscured_retina_pct": 27.3,
+      "obscured_pose_pct": 13.6
+    }
+  ],
+  "per_condition_table_rows": [
+    [
+      "Blur & Low Light",
+      162,
+      "66.7%",
+      "46.9%",
+      "76.5% \ud83c\udfc6",
+      "49.4%",
+      "38.3%",
+      "42.0%",
+      "33.3%",
+      "53.1%",
+      "23.5%"
+    ],
+    [
+      "Occlusion",
+      128,
+      "81.2%",
+      "59.4%",
+      "84.4% \ud83c\udfc6",
+      "65.6%",
+      "48.4%",
+      "46.9%",
+      "18.8%",
+      "40.6%",
+      "15.6%"
+    ],
+    [
+      "Distant / Multi-Person",
+      108,
+      "63.0%",
+      "37.0%",
+      "72.2% \ud83c\udfc6",
+      "51.9%",
+      "25.9%",
+      "44.4%",
+      "37.0%",
+      "63.0%",
+      "27.8%"
+    ],
+    [
+      "Top-Down Angle",
+      44,
+      "50.0%",
+      "36.4%",
+      "59.1% \ud83c\udfc6",
+      "22.7%",
+      "27.3%",
+      "13.6%",
+      "50.0%",
+      "63.6%",
+      "40.9%"
+    ]
+  ],
+  "per_condition_headers": [
+    "Situation / Environmental Challenge",
+    "Real Faces",
+    "Recall: Base SCRFD",
+    "Recall: RetinaFace",
+    "Recall: +Pose Fusion",
+    "Fully Protected: Base SCRFD",
+    "Fully Protected: RetinaFace",
+    "Fully Protected: +Pose Fusion",
+    "Missed: Base SCRFD",
+    "Missed: RetinaFace",
+    "Missed: +Pose Fusion"
+  ],
+  "agreement_matrix": {
+    "both_detected": 192,
+    "both_detected_pct": 43.4,
+    "scrfd_missed_retina_caught": 16,
+    "scrfd_missed_retina_caught_pct": 3.6,
+    "scrfd_caught_retina_missed": 110,
+    "scrfd_caught_retina_missed_pct": 24.9,
+    "shared_false_negatives_both_missed": 124,
+    "shared_false_negatives_both_missed_pct": 28.1,
+    "shared_fn_rescued_by_pose_fusion": 32,
+    "shared_fn_rescued_pct_of_shared": 25.8,
+    "table_rows": [
+      [
+        "Both Models Caught Face",
+        192,
+        "43.4%",
+        "High confidence mutual detection in normal/moderate lighting"
+      ],
+      [
+        "Caught by Verifier QA Only",
+        16,
+        "3.6%",
+        "RetinaFace verifier successfully caught faces that primary detector missed"
+      ],
+      [
+        "Caught by Primary Detector Only",
+        110,
+        "24.9%",
+        "SCRFD-34G multi-scale anchors caught smaller/partial profiles missed by verifier"
+      ],
+      [
+        "Blind Spot (Both Models Missed)",
+        124,
+        "28.1%",
+        "Common blind spots under violent motion blur or steep top-down camera pitch"
+      ],
+      [
+        "Rescued by Body/Head Pose Fusion",
+        32,
+        "25.8% of Blind Spots",
+        "Recovered & blurred by looking at shoulder and neck lines"
+      ]
+    ],
+    "headers": [
+      "Face Detection Agreement Category",
+      "Count (Faces)",
+      "Percentage of Dataset",
+      "Layman Meaning / Operational Significance"
+    ]
+  },
+  "gallery_comparison_strips": [
+    "comparison_01.jpg",
+    "comparison_02.jpg",
+    "comparison_03.jpg",
+    "comparison_04.jpg",
+    "comparison_05.jpg",
+    "comparison_06.jpg"
+  ],
+  "strata_breakdown": {
+    "Blur & Low Light": {
+      "images": 30,
+      "gt_faces": 162,
+      "missed_faces": 54,
+      "residual_visible": 28,
+      "fully_obscured": 80,
+      "flagged_by_verifier": 86,
+      "shared_false_negatives": 124
+    },
+    "Top-Down Angle": {
+      "images": 10,
+      "gt_faces": 44,
+      "missed_faces": 22,
+      "residual_visible": 12,
+      "fully_obscured": 10,
+      "flagged_by_verifier": 28,
+      "shared_false_negatives": 124
+    },
+    "Occlusion": {
+      "images": 38,
+      "gt_faces": 128,
+      "missed_faces": 24,
+      "residual_visible": 20,
+      "fully_obscured": 84,
+      "flagged_by_verifier": 52,
+      "shared_false_negatives": 124
+    },
+    "Distant / Multi-Person": {
+      "images": 21,
+      "gt_faces": 108,
+      "missed_faces": 40,
+      "residual_visible": 12,
+      "fully_obscured": 56,
+      "flagged_by_verifier": 68,
+      "shared_false_negatives": 124
+    }
+  },
+  "per_image_results": [
+    {
+      "filename": "blur_and_poor_lighting__clip_low_light_01__sec007_jpg.rf.714bca4f967d27b50ff527934042fca6.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 6,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 6
+    },
+    {
+      "filename": "blur_and_poor_lighting__clip_low_light_01__sec010_jpg.rf.8edc80da77a8242a7937f876593cbab3.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 6,
+      "scrfd_missed": 0,
+      "retina_missed": 4,
+      "pose_missed": 0,
+      "pose_obscured": 6
+    },
+    {
+      "filename": "blur_and_poor_lighting__clip_low_light_02__sec002_jpg.rf.af11891ee2cbb4e7ef78f316d4e59a4b.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__clip_low_light_02__sec003_jpg.rf.8ec214493a2933673414ee68ca79b51e.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__clip_low_light_02__sec004_jpg.rf.c0987fd04707bce44350d8dd614ce9a8.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 0,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__clip_low_light_02__sec005_jpg.rf.5bc9030fb5fa8bba2b89f1a4d27981ac.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__clip_low_light_02__sec007_jpg.rf.64c231ea9c2c68014b0d4eccf06942b7.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 4,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__clip_nominal_02__sec006_jpg.rf.1af1ea778b45e6cd18c958c15f828016.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 8,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 6
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-01-50-075-00-02-06-693-seg1__sec001_jpg.rf.49feb9fafbbf05cb1e4560da7e2f8e18.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 6,
+      "scrfd_missed": 4,
+      "retina_missed": 6,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-01-50-075-00-02-06-693-seg1__sec005_jpg.rf.a5457bd3079a213905d65cce54b1adec.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-01-50-075-00-02-06-693-seg1__sec007_jpg.rf.e3d78fdd91cbc66d972d34cec8083aea.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-01-50-075-00-02-06-693-seg1__sec009_jpg.rf.49a1e01cd9aa0d6bcf5a5109a882678b.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 4,
+      "retina_missed": 4,
+      "pose_missed": 4,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-01-50-075-00-02-06-693-seg1__sec015_jpg.rf.f002ee9dde51e3f5c3effaee7ca2dd1e.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-01-50-075-00-02-06-693-seg1__sec016_jpg.rf.c9258aa2e9e212b34126a99c26a5d400.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-01-50-075-00-02-06-693-seg1__sec017_jpg.rf.fa0e3369e09e5ab9823e5c4451d6fdb5.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-02-46-669-00-03-08-547-seg2__sec001_jpg.rf.45f9b70cc397e2f8d5af6aa3e177d46c.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 8,
+      "scrfd_missed": 8,
+      "retina_missed": 8,
+      "pose_missed": 8,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-02-46-669-00-03-08-547-seg2__sec003_jpg.rf.a18ea8d0eeae6289018f21e248b1a21c.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 8,
+      "scrfd_missed": 4,
+      "retina_missed": 6,
+      "pose_missed": 2,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-02-46-669-00-03-08-547-seg2__sec013_jpg.rf.5285666b959139cb39bfe41c9edb4a51.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 6,
+      "scrfd_missed": 4,
+      "retina_missed": 4,
+      "pose_missed": 4,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-04-59-709-00-05-11-335-seg3__sec001_jpg.rf.5a577d33b4f971403bb8c973a4ac5697.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 8,
+      "scrfd_missed": 6,
+      "retina_missed": 4,
+      "pose_missed": 4,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-04-59-709-00-05-11-335-seg3__sec003_jpg.rf.66e54d61c1419319c9686b0c8772af22.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 8,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-04-59-709-00-05-11-335-seg3__sec004_jpg.rf.3047602f2397fd415616deb96ed430e5.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 8,
+      "scrfd_missed": 2,
+      "retina_missed": 6,
+      "pose_missed": 4,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-04-59-709-00-05-11-335-seg3__sec006_jpg.rf.1c344261f3e0b122fb4fc64b7f52fde4.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 6,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-04-59-709-00-05-11-335-seg3__sec010_jpg.rf.38da413e82955e709c4b62df4a6c70e3.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-04-59-709-00-05-11-335-seg3__sec012_jpg.rf.17e2d22595cbc4c59ca9fc6b17bd8a9b.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 6,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-06-49-424-00-07-02-956-seg4__sec001_jpg.rf.96d39d854de968814a32e6f6bd2c9c9b.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 8,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 0,
+      "pose_obscured": 6
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-06-49-424-00-07-02-956-seg4__sec004_jpg.rf.eac90a4d8030c44b20abf2dde59cd0a0.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-06-49-424-00-07-02-956-seg4__sec005_jpg.rf.14fd3fd7f80c7f8916132de3f8768cd2.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 6,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 6
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-06-49-424-00-07-02-956-seg4__sec007_jpg.rf.107aeaeea4730d7e62cdeb07deea8ca1.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-06-49-424-00-07-02-956-seg4__sec010_jpg.rf.49250c359f6d144eb51c68c260162fc7.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 6,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "blur_and_poor_lighting__uniand_dvr_ch2_main_20250730080000_20250730090000-00-06-49-424-00-07-02-956-seg4__sec011_jpg.rf.a99ece4911b2868298b8ce7c0b059254.jpg",
+      "stratum": "Blur & Low Light",
+      "gt_face_count": 8,
+      "scrfd_missed": 4,
+      "retina_missed": 4,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-00-05-355-00-00-08-422-seg1__sec003_jpg.rf.38f904dcfc04ee4f0d939d7ed0716a13.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-00-05-355-00-00-08-422-seg1__sec004_jpg.rf.802f2075b005c45305dcbcdd661c0c05.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-25-23-018-00-25-46-715-seg2__sec011_jpg.rf.a159f6a84b9ca52b8bcb178aad1cdf63.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 6,
+      "scrfd_missed": 6,
+      "retina_missed": 4,
+      "pose_missed": 6,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-25-23-018-00-25-46-715-seg2__sec014_jpg.rf.c03ed54587b5bdd0a6de3008ab246e93.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-25-23-018-00-25-46-715-seg2__sec017_jpg.rf.405cce6ebae462755aba220d0b5f7a7b.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 6,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-38-19-303-00-38-38-266-seg3__sec008_jpg.rf.1d5c78b614695687c3a725d71f05fd47.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-38-19-303-00-38-38-266-seg3__sec013_jpg.rf.c1fd7053cbaaf114ef5c58d301a7b8a4.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-38-19-303-00-38-38-266-seg3__sec014_jpg.rf.8e80e318a746aa056abeee354e2a02b1.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-38-19-303-00-38-38-266-seg3__sec015_jpg.rf.33b32a9e3ac5b24e09637a3c04d7974e.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "face_from_top__uniand_dvr_ch4_main_20250730080000_20250730090000-00-38-19-303-00-38-38-266-seg3__sec017_jpg.rf.f9c48fd5f3a1ce3723cc5d0595500f81.jpg",
+      "stratum": "Top-Down Angle",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_blur_01__sec002_jpg.rf.bcebafeba8059af99f6f440268e60d17.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_blur_01__sec007_jpg.rf.9e4e04b9719ae9e186bc400e7bad4f3c.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_blur_02__sec003_jpg.rf.2bd58843e1e776a3529a4f73aee209c4.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 6,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_blur_02__sec006_jpg.rf.d11acc67188e544fe03cc96d43ad143c.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 8,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 4,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_blur_02__sec007_jpg.rf.12b1c17d85b7a0bec40dab6ed7f6eae9.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_nominal_01__sec010_jpg.rf.2280010b06d0122d50b4110696a7290f.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_occlusion_01__sec001_jpg.rf.ba83cf35832ba8e7659cbb68ac59f811.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_occlusion_01__sec005_jpg.rf.ba1bd0c93985d2eb0ad13e293ac0f574.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_occlusion_02__sec001_jpg.rf.7827d2910062307bb67200c9e15abaf6.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_occlusion_02__sec003_jpg.rf.33fecbe7ae233304dcdb41209df47dc1.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 4,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_occlusion_02__sec006_jpg.rf.a78eac23a6aca376e69357596126c11f.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_occlusion_02__sec007_jpg.rf.4886a3241db16b169024d2fd9445579b.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_occlusion_02__sec008_jpg.rf.798223e72a8acb4f1191db4e294c1312.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 0,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_occlusion_02__sec010_jpg.rf.9608337a657c6e25a13172e99bcd3e9c.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 0,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__clip_small_scale_02__sec002_jpg.rf.46a2f574566a741ae4c822b8f188a231.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-01-35-027-00-02-12-283-seg1__sec008_jpg.rf.06af5e893eabe68f790e2168f8499705.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-01-35-027-00-02-12-283-seg1__sec028_jpg.rf.5e1cd2802ca45d5613f25f2066f759af.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-01-35-027-00-02-12-283-seg1__sec029_jpg.rf.9ea8e7ca7ec2e22deedf306bedfdb245.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-01-35-027-00-02-12-283-seg1__sec035_jpg.rf.fd18b2b07b4a52deea103763f8493974.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-06-00-812-00-06-25-522-seg2__sec009_jpg.rf.6dbbde45c37f87cacd655ee93949fb4f.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 0,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-06-00-812-00-06-25-522-seg2__sec013_jpg.rf.38d84594af728496de42590617b6f931.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-06-00-812-00-06-25-522-seg2__sec023_jpg.rf.acb9eda2144eeb0ddd421a036beff419.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-06-00-812-00-06-25-522-seg2__sec024_jpg.rf.a7057815ab1c899dfe93ac93d813234e.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-07-39-091-00-07-58-607-seg3__sec002_jpg.rf.13395edd24b3a7490ecac71111b27983.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-07-39-091-00-07-58-607-seg3__sec009_jpg.rf.c764621851f0839fd9938bfa29793e53.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-07-39-091-00-07-58-607-seg3__sec013_jpg.rf.00d81973a2608f69ffe93290d0318b9f.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-11-37-762-00-11-51-718-seg4__sec005_jpg.rf.2ecee2f4433da2227fb9b6edd2ccab64.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 8,
+      "scrfd_missed": 2,
+      "retina_missed": 4,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-11-57-426-00-12-55-787-seg5__sec003_jpg.rf.1b51e96ba4c99c80119518f30d499bbe.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-11-57-426-00-12-55-787-seg5__sec004_jpg.rf.4325a679f4df1b43964e571155ea94a8.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-11-57-426-00-12-55-787-seg5__sec008_jpg.rf.ae5371a71ca0888679d74419dbeb1293.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 6,
+      "scrfd_missed": 2,
+      "retina_missed": 0,
+      "pose_missed": 2,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-11-57-426-00-12-55-787-seg5__sec019_jpg.rf.4d69e08dc5a10a36cb0774dfdfc68bf3.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-11-57-426-00-12-55-787-seg5__sec031_jpg.rf.4d2ff53f900473527672a627ccdd448e.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-11-57-426-00-12-55-787-seg5__sec032_jpg.rf.fc16303e68486e614ae0818fbfe6fbb2.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-11-57-426-00-12-55-787-seg5__sec041_jpg.rf.d8eae2b46d50c806d19e2d8c263abcaa.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 6,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-11-57-426-00-12-55-787-seg5__sec047_jpg.rf.a36c3cc31e48291978ad22dcf2140e29.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-18-30-224-00-19-00-349-seg6__sec004_jpg.rf.7a25f3345d9b279aed1b65e7172378f2.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-18-30-224-00-19-00-349-seg6__sec019_jpg.rf.4f02c973c02c48756ea493264a503cea.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 8,
+      "scrfd_missed": 0,
+      "retina_missed": 6,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-18-30-224-00-19-00-349-seg6__sec026_jpg.rf.df5b8691d7fbfe415753d1681fd48050.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "good_lighting_and_occlusion__video_one_copy-00-18-30-224-00-19-00-349-seg6__sec027_jpg.rf.1beae300a641255c6dd217c3dd31f0f4.jpg",
+      "stratum": "Occlusion",
+      "gt_face_count": 6,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 6
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-00-03-205-00-00-13-552-seg1__sec005_jpg.rf.0a1ad75fabf1fe3a53addd7a2259a060.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-02-54-750-00-03-12-576-seg2__sec001_jpg.rf.01c4915b2874345e9c697957f94f89fa.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 6,
+      "scrfd_missed": 4,
+      "retina_missed": 6,
+      "pose_missed": 4,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-02-54-750-00-03-12-576-seg2__sec004_jpg.rf.e1e8aaa081fb14aa388163537d23cf38.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-02-54-750-00-03-12-576-seg2__sec006_jpg.rf.08c008953f21f2c199da80a3178d7d33.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 2,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-02-54-750-00-03-12-576-seg2__sec008_jpg.rf.02edb7fb1d06ce060a1f84e802b4efe2.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 4,
+      "retina_missed": 4,
+      "pose_missed": 2,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-02-54-750-00-03-12-576-seg2__sec011_jpg.rf.2f9b3937c40894c7d6d3510ea6157ed7.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 4,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-02-54-750-00-03-12-576-seg2__sec013_jpg.rf.19b1fb74fc4af9a80f1df8a596fa6b72.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 6,
+      "scrfd_missed": 2,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-02-54-750-00-03-12-576-seg2__sec015_jpg.rf.06eaa9bca4addee6b1891dec029120a3.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 10,
+      "scrfd_missed": 8,
+      "retina_missed": 8,
+      "pose_missed": 8,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-03-668-00-04-12-718-seg3__sec002_jpg.rf.8b3cdd809f91a56ff8efa497a8231394.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-03-668-00-04-12-718-seg3__sec007_jpg.rf.4a843cde73601f03dac382862b30950d.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 6,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-51-659-00-05-01-455-seg4__sec001_jpg.rf.e0af52d53703d9828700ea47d44b57a5.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 2,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 0
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-51-659-00-05-01-455-seg4__sec003_jpg.rf.c84ed5c33754be16140f9adda63b341c.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-51-659-00-05-01-455-seg4__sec004_jpg.rf.7c16b23a7f86632bdbb3a899d3b9e343.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-51-659-00-05-01-455-seg4__sec005_jpg.rf.6f998893045bd45e2bfc2819912cc81d.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 0,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-51-659-00-05-01-455-seg4__sec006_jpg.rf.d243964a4a8ba6178e578139fa95a373.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 8,
+      "scrfd_missed": 6,
+      "retina_missed": 8,
+      "pose_missed": 4,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-51-659-00-05-01-455-seg4__sec007_jpg.rf.a8f6cc9b419f116309d94ca20ddcb90b.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 0,
+      "retina_missed": 4,
+      "pose_missed": 0,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-51-659-00-05-01-455-seg4__sec009_jpg.rf.bc01ef62a4802380971b8f6b50df6079.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 4,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 2,
+      "pose_obscured": 2
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-04-51-659-00-05-01-455-seg4__sec010_jpg.rf.b82ecb6d3cff78e1858fa055586e7fdb.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 8,
+      "scrfd_missed": 0,
+      "retina_missed": 8,
+      "pose_missed": 0,
+      "pose_obscured": 8
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-05-21-333-00-05-27-788-seg5__sec005_jpg.rf.90e6ffa649b125646845d103a2e287eb.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 10,
+      "scrfd_missed": 2,
+      "retina_missed": 8,
+      "pose_missed": 2,
+      "pose_obscured": 4
+    },
+    {
+      "filename": "or_quality_multiple_people__uniand_dvr_ch3_main_20250730200000_20250730210000-00-05-49-973-00-05-59-973-seg6__sec011_jpg.rf.c5c49b6b0fc7c9b35520ffe4b5cc3346.jpg",
+      "stratum": "Distant / Multi-Person",
+      "gt_face_count": 8,
+      "scrfd_missed": 2,
+      "retina_missed": 2,
+      "pose_missed": 0,
+      "pose_obscured": 4
+    }
+  ]
+}
