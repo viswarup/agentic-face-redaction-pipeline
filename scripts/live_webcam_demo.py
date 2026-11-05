@@ -2,15 +2,17 @@
 Live Webcam Demonstration Tool (Non-Agentic Pipeline).
 
 Demonstrates real-time face redaction at 20-30 FPS:
-  - Base Face Detection: SCRFD-34G
-  - Skeletal Keypoint Reasoning: YOLOv8n-Pose (Tracks head when turned/occluded)
-  - Obfuscation Engine: Heavy Dual Mosaic / Gaussian Redaction
+  - Base Face Detection & 5 Facial Landmarks: SCRFD-34G
+  - Skeletal Keypoints & Bones: YOLOv8n-Pose (Tracks head, ears, shoulders)
+  - Obfuscation Engine: Tighter, adjustable blur & dilation
   - Live Surveillance HUD Overlay: FPS, face count, active status
 
 Interactive Hotkeys:
-  [SPACE] - Toggle Redaction ON / OFF (Show raw face vs. blurred face)
-  [P]     - Toggle Pose Fusion ON / OFF (Demonstrate head tracking on/off)
-  [M]     - Toggle Redaction Mode (Gaussian vs Mosaic)
+  [SPACE] - Toggle Redaction ON / OFF (Show raw face with AI points vs. blurred face)
+  [K]     - Toggle AI Keypoints & Skeleton overlay ON / OFF
+  [P]     - Toggle Pose Fusion Tracking ON / OFF
+  [ [ / ] ] - Decrease / Increase blur dilation radius (-/+ 2%)
+  [M]     - Toggle Blur Mode (Dual vs Mosaic)
   [Q/ESC] - Quit Demo
 """
 
@@ -35,6 +37,79 @@ from app.pipeline.redactor import apply_obfuscation, dilate_bbox
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("webcam_demo")
 
+# COCO Pose Skeleton Connections (Keypoint index pairs)
+SKELETON_CONNECTIONS = [
+    (0, 1), (0, 2),  # Nose to Eyes
+    (1, 3), (2, 4),  # Eyes to Ears
+    (5, 6),          # Shoulder to Shoulder
+    (5, 7), (7, 9),  # Left Arm (Shoulder -> Elbow -> Wrist)
+    (6, 8), (8, 10), # Right Arm (Shoulder -> Elbow -> Wrist)
+]
+
+
+def draw_ai_landmarks(
+    frame: np.ndarray,
+    scrfd_detections: list[dict],
+    pose_results: list,
+) -> np.ndarray:
+    """Renders SCRFD 5-point facial landmarks and YOLOv8 17-point skeletal pose."""
+    out = frame.copy()
+
+    # 1. Render YOLOv8-Pose Skeleton & Keypoints (Bright Emerald & Gold)
+    for res in pose_results:
+        if res.keypoints is None or len(res.keypoints.data) == 0:
+            continue
+
+        for kp in res.keypoints.data.cpu().numpy():
+            # Draw Skeleton Bones
+            for idx1, idx2 in SKELETON_CONNECTIONS:
+                if idx1 < len(kp) and idx2 < len(kp):
+                    pt1, pt2 = kp[idx1], kp[idx2]
+                    if pt1[2] >= 0.40 and pt2[2] >= 0.40:
+                        x1, y1 = int(pt1[0]), int(pt1[1])
+                        x2, y2 = int(pt2[0]), int(pt2[1])
+                        cv2.line(out, (x1, y1), (x2, y2), (0, 230, 118), 2, cv2.LINE_AA)
+
+            # Neck anchor vector (Mid-shoulders to nose/ears)
+            if len(kp) > 6 and kp[5][2] >= 0.40 and kp[6][2] >= 0.40:
+                mid_x = int((kp[5][0] + kp[6][0]) / 2)
+                mid_y = int((kp[5][1] + kp[6][1]) / 2)
+                cv2.circle(out, (mid_x, mid_y), 4, (0, 255, 255), -1, cv2.LINE_AA)
+                if kp[0][2] >= 0.40:  # Nose visible
+                    cv2.line(out, (mid_x, mid_y), (int(kp[0][0]), int(kp[0][1])), (0, 220, 255), 2, cv2.LINE_AA)
+
+            # Draw Keypoint Dots
+            for i, p in enumerate(kp):
+                if p[2] >= 0.40:
+                    px, py = int(p[0]), int(p[1])
+                    if i in (0, 1, 2, 3, 4):  # Head/Ears/Nose
+                        cv2.circle(out, (px, py), 4, (0, 220, 255), -1, cv2.LINE_AA)
+                    elif i in (5, 6):  # Shoulders
+                        cv2.circle(out, (px, py), 6, (0, 255, 128), -1, cv2.LINE_AA)
+                        cv2.circle(out, (px, py), 8, (0, 255, 128), 1, cv2.LINE_AA)
+                    else:  # Arms/Body
+                        cv2.circle(out, (px, py), 4, (0, 180, 255), -1, cv2.LINE_AA)
+
+    # 2. Render SCRFD 5 Facial Landmarks (Cyan Crosshairs & Dots)
+    for det in scrfd_detections:
+        lms = det.get("landmarks", [])
+        if lms and len(lms) >= 5:
+            # 0=L_Eye, 1=R_Eye, 2=Nose, 3=L_Mouth, 4=R_Mouth
+            for i, pt in enumerate(lms):
+                lx, ly = int(pt[0]), int(pt[1])
+                # Outer glow ring
+                cv2.circle(out, (lx, ly), 5, (255, 230, 0), 1, cv2.LINE_AA)
+                # Inner solid point
+                cv2.circle(out, (lx, ly), 3, (0, 240, 255), -1, cv2.LINE_AA)
+
+            # Subtle dotted triangle linking eyes and nose
+            pt_le, pt_re, pt_nose = lms[0], lms[1], lms[2]
+            cv2.line(out, (int(pt_le[0]), int(pt_le[1])), (int(pt_re[0]), int(pt_re[1])), (255, 200, 0), 1, cv2.LINE_AA)
+            cv2.line(out, (int(pt_le[0]), int(pt_le[1])), (int(pt_nose[0]), int(pt_nose[1])), (255, 200, 0), 1, cv2.LINE_AA)
+            cv2.line(out, (int(pt_re[0]), int(pt_re[1])), (int(pt_nose[0]), int(pt_nose[1])), (255, 200, 0), 1, cv2.LINE_AA)
+
+    return out
+
 
 def draw_hud(
     frame: np.ndarray,
@@ -42,93 +117,58 @@ def draw_hud(
     detected_count: int,
     redaction_enabled: bool,
     pose_enabled: bool,
+    keypoints_enabled: bool,
+    dilation_ratio: float,
     mode: str,
 ) -> np.ndarray:
     """Renders a sleek, professional surveillance HUD overlay on the display frame."""
     out = frame.copy()
     h, w = out.shape[:2]
 
-    # Top Status Bar (Translucent Dark Banner)
+    # Top Status Bar
     header_h = 44
     overlay = out.copy()
     cv2.rectangle(overlay, (0, 0), (w, header_h), (12, 16, 26), -1)
     cv2.addWeighted(overlay, 0.85, out, 0.15, 0, out)
 
-    # Accent divider line
     accent_color = (0, 230, 118) if redaction_enabled else (0, 80, 255)
     cv2.line(out, (0, header_h), (w, header_h), accent_color, 2)
 
     # 1. System Title
-    cv2.putText(
-        out,
-        "PRIVACY SHIELD LIVE DEMO",
-        (16, 28),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.65,
-        (255, 255, 255),
-        2,
-        cv2.LINE_AA,
-    )
+    cv2.putText(out, "PRIVACY SHIELD LIVE DEMO", (16, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2, cv2.LINE_AA)
 
-    # 2. Status Badge (PROTECTED vs RAW)
-    status_text = "● REDACTION ACTIVE" if redaction_enabled else "○ RAW FEED (UNPROTECTED)"
+    # 2. Redaction Status Badge
+    status_text = "● REDACTED" if redaction_enabled else "○ RAW"
     status_color = (0, 230, 118) if redaction_enabled else (50, 70, 255)
-    cv2.putText(
-        out,
-        status_text,
-        (330, 28),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.55,
-        status_color,
-        2,
-        cv2.LINE_AA,
-    )
+    cv2.putText(out, status_text, (330, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.55, status_color, 2, cv2.LINE_AA)
 
-    # 3. Pose Tracking Indicator
+    # 3. Dilation Size Badge
+    dil_text = f"Dilation: {int(dilation_ratio * 100)}%"
+    cv2.putText(out, dil_text, (480, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.50, (200, 220, 240), 2, cv2.LINE_AA)
+
+    # 4. Keypoints Badge
+    kp_text = "POINTS: ON" if keypoints_enabled else "POINTS: OFF"
+    kp_color = (0, 240, 255) if keypoints_enabled else (120, 120, 120)
+    cv2.putText(out, kp_text, (w - 380, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.50, kp_color, 2, cv2.LINE_AA)
+
+    # 5. Pose Tracking Indicator
     pose_text = "POSE: ON" if pose_enabled else "POSE: OFF"
-    pose_color = (0, 220, 255) if pose_enabled else (120, 120, 120)
-    cv2.putText(
-        out,
-        pose_text,
-        (w - 330, 28),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.55,
-        pose_color,
-        2,
-        cv2.LINE_AA,
-    )
+    pose_color = (0, 230, 118) if pose_enabled else (120, 120, 120)
+    cv2.putText(out, pose_text, (w - 240, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.50, pose_color, 2, cv2.LINE_AA)
 
-    # 4. Faces Count & FPS
-    stats_text = f"Faces: {detected_count} | {fps:.1f} FPS"
-    cv2.putText(
-        out,
-        stats_text,
-        (w - 195, 28),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.55,
-        (200, 220, 240),
-        2,
-        cv2.LINE_AA,
-    )
+    # 6. FPS
+    stats_text = f"{fps:.1f} FPS"
+    cv2.putText(out, stats_text, (w - 110, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 2, cv2.LINE_AA)
 
-    # Bottom Hotkey Bar (Subtle banner)
+    # Bottom Hotkey Bar
     footer_h = 32
     overlay_footer = out.copy()
     cv2.rectangle(overlay_footer, (0, h - footer_h), (w, h), (12, 16, 26), -1)
     cv2.addWeighted(overlay_footer, 0.85, out, 0.15, 0, out)
     cv2.line(out, (0, h - footer_h), (w, h - footer_h), (60, 70, 90), 1)
 
-    controls_text = "[SPACE] Toggle Redaction   |   [P] Toggle Pose Tracking   |   [M] Toggle Blur Mode   |   [Q] Quit"
-    cv2.putText(
-        out,
-        controls_text,
-        (16, h - 10),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.45,
-        (160, 175, 195),
-        1,
-        cv2.LINE_AA,
-    )
+    controls_text = "[SPACE] Redaction | [K] Points & Skeleton | [P] Pose | [ [ / ] ] Dilation | [M] Mode | [Q] Quit"
+    cv2.putText(out, controls_text, (16, h - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.44, (160, 175, 195), 1, cv2.LINE_AA)
 
     return out
 
@@ -136,7 +176,7 @@ def draw_hud(
 def run_live_demo(
     camera_id: int = 0,
     conf_thresh: float = 0.35,
-    dilation_ratio: float = 0.28,
+    initial_dilation: float = 0.14,  # Reduced, tighter default dilation
 ) -> None:
     """Captures live webcam feed, runs SCRFD + Pose fusion, and displays live HUD."""
     logger.info("Initializing models for Live Webcam Demo...")
@@ -148,17 +188,11 @@ def run_live_demo(
     cap = cv2.VideoCapture(camera_id)
 
     if not cap.isOpened():
-        # Fallback to camera index 1 if 0 fails (common on Macs with Continuity Camera)
-        logger.warning("Camera index %d failed, trying camera index 1...", camera_id)
         cap = cv2.VideoCapture(1)
         if not cap.isOpened():
-            logger.error("Could not open any webcam. Please ensure camera permissions are granted.")
-            print("\n[ERROR] Unable to access webcam.")
-            print("Please check that your terminal has Camera permissions in macOS:")
-            print("System Settings -> Privacy & Security -> Camera -> Allow Terminal/IDE.\n")
+            print("\n[ERROR] Unable to access webcam. Check macOS permissions:\nSystem Settings -> Privacy & Security -> Camera -> Allow Terminal/IDE.\n")
             return
 
-    # Attempt to set comfortable 720p resolution
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
@@ -168,20 +202,22 @@ def run_live_demo(
     # State variables
     redaction_enabled = True
     pose_enabled = True
-    blur_mode = "gaussian_or_mosaic"  # "gaussian_or_mosaic" or "mosaic"
+    keypoints_enabled = True
+    dilation_ratio = initial_dilation
+    blur_mode = "gaussian_or_mosaic"
     
     fps = 0.0
-    frame_count = 0
-    t_start = time.perf_counter()
 
     print("\n" + "=" * 70)
-    print("      LIVE FACE REDACTION DEMO (NON-AGENTIC PIPELINE)")
+    print("      LIVE FACE REDACTION DEMO (TIGHTER BLUR + AI KEYPOINTS)")
     print("=" * 70)
     print("Controls:")
-    print("  [SPACE] - Toggle Redaction ON / OFF")
-    print("  [P]     - Toggle Pose Fusion Tracking ON / OFF")
-    print("  [M]     - Toggle Blur Mode (Dual vs Mosaic)")
-    print("  [Q/ESC] - Exit demo")
+    print("  [SPACE]   - Toggle Redaction ON / OFF")
+    print("  [K]       - Toggle AI Facial Points & Skeleton ON / OFF")
+    print("  [P]       - Toggle Pose Fusion Tracking ON / OFF")
+    print("  [ [ / ] ] - Decrease / Increase blur dilation radius (-/+ 2%)")
+    print("  [M]       - Toggle Blur Mode (Dual vs Mosaic)")
+    print("  [Q/ESC]   - Exit demo")
     print("=" * 70 + "\n")
 
     try:
@@ -194,20 +230,29 @@ def run_live_demo(
             h, w = frame.shape[:2]
             t_frame_start = time.perf_counter()
 
-            # Select active detector
+            # 1. Run Detection
             active_detector = detector_with_pose if pose_enabled else detector_without_pose
             detections = active_detector.detect(frame)
             detected_count = len(detections)
 
-            # Apply redaction if enabled
+            # 2. Apply Redaction if enabled
             if redaction_enabled and detected_count > 0:
                 dilated_boxes = [dilate_bbox(d["bbox"], (h, w), ratio=dilation_ratio) for d in detections]
                 display_frame = apply_obfuscation(frame, dilated_boxes, mode=blur_mode)
             else:
                 display_frame = frame.copy()
 
-            # Compute smooth moving-average FPS
-            frame_count += 1
+            # 3. Render AI Keypoints & Pose Skeleton if enabled
+            if keypoints_enabled:
+                pose_results = []
+                if pose_enabled and detector_with_pose.pose_fusor:
+                    try:
+                        pose_results = detector_with_pose.pose_fusor.pose_model(frame, verbose=False, conf=0.35)
+                    except Exception:
+                        pass
+                display_frame = draw_ai_landmarks(display_frame, detections, pose_results)
+
+            # Compute smooth FPS
             elapsed = time.perf_counter() - t_frame_start
             instant_fps = 1.0 / max(elapsed, 1e-5)
             fps = 0.90 * fps + 0.10 * instant_fps if fps > 0 else instant_fps
@@ -219,22 +264,33 @@ def run_live_demo(
                 detected_count=detected_count,
                 redaction_enabled=redaction_enabled,
                 pose_enabled=pose_enabled,
+                keypoints_enabled=keypoints_enabled,
+                dilation_ratio=dilation_ratio,
                 mode=blur_mode,
             )
 
             cv2.imshow(window_name, hud_frame)
 
             key = cv2.waitKey(1) & 0xFF
-            if key in (ord("q"), ord("Q"), 27):  # 27 = ESC
+            if key in (ord("q"), ord("Q"), 27):
                 logger.info("Exiting live demo.")
                 break
-            elif key == ord(" "):  # Space: Toggle Redaction
+            elif key == ord(" "):
                 redaction_enabled = not redaction_enabled
                 logger.info("Redaction toggled: %s", "ENABLED" if redaction_enabled else "DISABLED")
-            elif key in (ord("p"), ord("P")):  # P: Toggle Pose
+            elif key in (ord("k"), ord("K")):
+                keypoints_enabled = not keypoints_enabled
+                logger.info("Keypoints overlay toggled: %s", "ENABLED" if keypoints_enabled else "DISABLED")
+            elif key in (ord("p"), ord("P")):
                 pose_enabled = not pose_enabled
                 logger.info("Pose tracking toggled: %s", "ENABLED" if pose_enabled else "DISABLED")
-            elif key in (ord("m"), ord("M")):  # M: Toggle Mode
+            elif key == ord("["):
+                dilation_ratio = max(0.04, round(dilation_ratio - 0.02, 2))
+                logger.info("Dilation reduced to: %.2f", dilation_ratio)
+            elif key == ord("]"):
+                dilation_ratio = min(0.40, round(dilation_ratio + 0.02, 2))
+                logger.info("Dilation increased to: %.2f", dilation_ratio)
+            elif key in (ord("m"), ord("M")):
                 blur_mode = "mosaic" if blur_mode == "gaussian_or_mosaic" else "gaussian_or_mosaic"
                 logger.info("Blur mode changed to: %s", blur_mode)
 
